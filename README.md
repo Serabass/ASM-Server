@@ -8,7 +8,8 @@ https://asm.serabass.kz
 
 Размер можно проверить командой:
 ```powershell
-docker images asm-web-server:latest
+docker images asm-web-server:scratch
+docker images asm-web-server:alpine
 ```
 
 Сделано с использованием <a href="https://cursor.com">Cursor IDE</a>
