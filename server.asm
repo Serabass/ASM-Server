@@ -6,7 +6,7 @@ section .data
     ; Content-Length: 1234 (будет вычислено автоматически)
     response db "HTTP/1.1 200 OK", 13, 10
              db "Content-Type: text/html; charset=utf-8", 13, 10
-             db "Content-Length: 2199", 13, 10
+             db "Content-Length: 2286", 13, 10
              db "Connection: close", 13, 10
              db 13, 10
              db "<!DOCTYPE html>", 10
@@ -51,9 +51,10 @@ section .data
              db "    <div class='tech'>", 10
              db "      <span class='tech-name'>Kubernetes</span> - Container orchestration (deployment ready)", 10
              db "    </div>", 10
-             db "    <h2>Docker Image Size:</h2>", 10
+             db "    <h2>Size Information:</h2>", 10
              db "    <div class='tech'>", 10
-             db "      <span class='tech-name'>11.7kB</span> (of which 2kB is the page)", 10
+             db "      <span class='tech-name'>Docker Image:</span> 11.7kB<br>", 10
+             db "      <span class='tech-name'>Binary:</span> 11.4KB (11664 bytes, of which 2kB is the HTML page)", 10
              db "    </div>", 10
              db "    <div class='footer'>", 10
              db "      <p>No frameworks. No libraries. Just pure assembly and syscalls.</p>", 10

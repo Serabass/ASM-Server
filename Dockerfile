@@ -22,7 +22,7 @@ COPY server.asm .
 RUN nasm -f elf64 server.asm -o server.o && \
     ld -m elf_x86_64 -static -o server server.o
 
-RUN -lha /build
+RUN ls -lha /build
 
 #####################################################################
 
