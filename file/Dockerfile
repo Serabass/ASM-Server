@@ -1,6 +1,6 @@
 ARG FINAL_IMAGE=scratch
 
-# Мультистейдж сборка для минимального образа с внешней HTML страницей
+# Мультистейдж сборка для варианта с чтением HTML из файла
 FROM alpine:latest AS base
 
 # Устанавливаем необходимые инструменты для сборки
@@ -14,13 +14,12 @@ RUN apk add --no-cache \
 
 FROM base AS builder
 
-# Копируем исходный код и HTML страницу
+# Копируем исходный код
 WORKDIR /build
-COPY server-external.asm .
-COPY page.html .
+COPY server.asm .
 
 # Компилируем ассемблер со статической линковкой для scratch и strip для уменьшения размера
-RUN nasm -f elf64 server-external.asm -o server.o && \
+RUN nasm -f elf64 server.asm -o server.o && \
     ld -m elf_x86_64 -static -s -o server server.o
 
 RUN ls -lha /build
@@ -30,8 +29,9 @@ RUN ls -lha /build
 # Финальный образ - пустой scratch
 FROM ${FINAL_IMAGE}
 
-# Копируем собранный статический бинарник
+# Копируем собранный статический бинарник и HTML страницу
 COPY --from=builder /build/server /server
+COPY page.html /page.html
 
 # Открываем порт
 EXPOSE 8080

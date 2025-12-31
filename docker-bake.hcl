@@ -2,26 +2,23 @@ variable "REGISTRY" {
   default = "reg.serabass.kz"
 }
 
-# variable "VERSION" {
-#   default = "latest"
-# }
-
 group "default" {
   targets = [
-    "server-alpine",
-    "server-scratch",
-    "server-external-alpine",
-    "server-external-scratch",
-    "server-file-alpine",
-    "server-file-scratch",
+    "embedded-alpine",
+    "embedded-scratch",
+    "external-alpine",
+    "external-scratch",
+    "file-alpine",
+    "file-scratch",
   ]
 }
 
-target "server-alpine" {
-  context = "."
+# Embedded вариант (HTML встроен в код)
+target "embedded-alpine" {
+  context = "./embedded"
   dockerfile = "Dockerfile"
   tags = [
-    "${REGISTRY}/asm-server:alpine"
+    "${REGISTRY}/asm-server:embedded-alpine"
   ]
   args = {
     FINAL_IMAGE = "alpine:latest"
@@ -29,18 +26,18 @@ target "server-alpine" {
   platforms = ["linux/amd64"]
   output = ["type=image,push=true"]
   cache-from = [
-    "type=registry,ref=${REGISTRY}/asmserver:alpine"
+    "type=registry,ref=${REGISTRY}/asmserver:embedded-alpine"
   ]
   cache-to = [
     "type=inline"
   ]
 }
 
-target "server-scratch" {
-  context = "."
+target "embedded-scratch" {
+  context = "./embedded"
   dockerfile = "Dockerfile"
   tags = [
-    "${REGISTRY}/asm-server:scratch"
+    "${REGISTRY}/asm-server:embedded-scratch"
   ]
   args = {
     FINAL_IMAGE = "scratch"
@@ -48,16 +45,17 @@ target "server-scratch" {
   platforms = ["linux/amd64"]
   output = ["type=image,push=true"]
   cache-from = [
-    "type=registry,ref=${REGISTRY}/asmserver:scratch"
+    "type=registry,ref=${REGISTRY}/asmserver:embedded-scratch"
   ]
   cache-to = [
     "type=inline"
   ]
 }
 
-target "server-external-alpine" {
-  context = "."
-  dockerfile = "Dockerfile.external"
+# External вариант (HTML через incbin)
+target "external-alpine" {
+  context = "./external"
+  dockerfile = "Dockerfile"
   tags = [
     "${REGISTRY}/asm-server:external-alpine"
   ]
@@ -74,9 +72,9 @@ target "server-external-alpine" {
   ]
 }
 
-target "server-external-scratch" {
-  context = "."
-  dockerfile = "Dockerfile.external"
+target "external-scratch" {
+  context = "./external"
+  dockerfile = "Dockerfile"
   tags = [
     "${REGISTRY}/asm-server:external-scratch"
   ]
@@ -93,9 +91,10 @@ target "server-external-scratch" {
   ]
 }
 
-target "server-file-alpine" {
-  context = "."
-  dockerfile = "Dockerfile.file"
+# File вариант (HTML читается с диска)
+target "file-alpine" {
+  context = "./file"
+  dockerfile = "Dockerfile"
   tags = [
     "${REGISTRY}/asm-server:file-alpine"
   ]
@@ -112,9 +111,9 @@ target "server-file-alpine" {
   ]
 }
 
-target "server-file-scratch" {
-  context = "."
-  dockerfile = "Dockerfile.file"
+target "file-scratch" {
+  context = "./file"
+  dockerfile = "Dockerfile"
   tags = [
     "${REGISTRY}/asm-server:file-scratch"
   ]
