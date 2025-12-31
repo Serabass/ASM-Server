@@ -17,10 +17,8 @@ WORKDIR /build
 COPY server.asm .
 
 # Компилируем ассемблер
-RUN nasm -f elf64 server.asm -o server.o
-
-# Линкуем
-RUN ld -m elf_x86_64 -o server server.o
+RUN nasm -f elf64 server.asm -o server.o && \
+    ld -m elf_x86_64 -o server server.o
 
 #####################################################################
 
