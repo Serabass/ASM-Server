@@ -1,5 +1,5 @@
 # Мультистейдж сборка для минимального образа
-FROM alpine:latest AS builder
+FROM alpine:latest AS base
 
 # Устанавливаем необходимые инструменты для сборки
 RUN apk add --no-cache \
@@ -7,6 +7,10 @@ RUN apk add --no-cache \
     gcc \
     musl-dev \
     binutils
+
+#####################################################################
+
+FROM base AS builder
 
 # Копируем исходный код
 WORKDIR /build
@@ -18,7 +22,7 @@ RUN nasm -f elf64 server.asm -o server.o
 # Линкуем
 RUN ld -m elf_x86_64 -o server server.o
 
-##########################################################
+#####################################################################
 
 # Финальный образ
 FROM alpine:latest
