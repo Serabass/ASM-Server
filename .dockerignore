@@ -1,0 +1,7 @@
+*.o
+*.asm.bak
+.git
+.gitignore
+README.md
+*.md
+

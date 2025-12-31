@@ -1,0 +1,16 @@
+services:
+  asm-web-server:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: asm-web-server
+    ports:
+      - "8080:8080"
+    restart: unless-stopped
+    # Healthcheck отключен, т.к. в минимальном Alpine нет wget/nc
+    # Можно добавить busybox-extras если нужен healthcheck
+    # healthcheck:
+    #   test: ["CMD-SHELL", "wget --quiet --tries=1 --spider http://localhost:8080/ || exit 1"]
+    #   interval: 10s
+    #   timeout: 5s
+    #   retries: 3
