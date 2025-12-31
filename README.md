@@ -2,4 +2,5 @@
 
 https://asm.serabass.kz
 
-Made with Cursor IDE
+Сделано с использованием <a href="https://cursor.com">Cursor IDE</a>
+
