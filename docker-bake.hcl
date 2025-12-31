@@ -10,6 +10,8 @@ group "default" {
   targets = [
     "server-alpine",
     "server-scratch",
+    "server-external-alpine",
+    "server-external-scratch",
   ]
 }
 
@@ -45,6 +47,44 @@ target "server-scratch" {
   output = ["type=image,push=true"]
   cache-from = [
     "type=registry,ref=${REGISTRY}/asmserver:scratch"
+  ]
+  cache-to = [
+    "type=inline"
+  ]
+}
+
+target "server-external-alpine" {
+  context = "."
+  dockerfile = "Dockerfile.external"
+  tags = [
+    "${REGISTRY}/asm-server:external-alpine"
+  ]
+  args = {
+    FINAL_IMAGE = "alpine:latest"
+  }
+  platforms = ["linux/amd64"]
+  output = ["type=image,push=true"]
+  cache-from = [
+    "type=registry,ref=${REGISTRY}/asmserver:external-alpine"
+  ]
+  cache-to = [
+    "type=inline"
+  ]
+}
+
+target "server-external-scratch" {
+  context = "."
+  dockerfile = "Dockerfile.external"
+  tags = [
+    "${REGISTRY}/asm-server:external-scratch"
+  ]
+  args = {
+    FINAL_IMAGE = "scratch"
+  }
+  platforms = ["linux/amd64"]
+  output = ["type=image,push=true"]
+  cache-from = [
+    "type=registry,ref=${REGISTRY}/asmserver:external-scratch"
   ]
   cache-to = [
     "type=inline"
