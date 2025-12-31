@@ -4,8 +4,8 @@ https://asm.serabass.kz
 
 ## Размер образа
 
-- **Docker Image:** 11.7kB
-- **Binary:** 11.4KB (11664 bytes, из которых 2кб это HTML страница)
+- **Docker Image:** 10.9kB
+- **Binary:** 10.7KB (10928 bytes, из которых 2кб это HTML страница)
 
 Размер можно проверить командой:
 ```powershell

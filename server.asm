@@ -53,8 +53,8 @@ section .data
              db "    </div>", 10
              db "    <h2>Size Information:</h2>", 10
              db "    <div class='tech'>", 10
-             db "      <span class='tech-name'>Docker Image:</span> 11.7kB<br>", 10
-             db "      <span class='tech-name'>Binary:</span> 11.4KB (11664 bytes, of which 2kB is the HTML page)", 10
+             db "      <span class='tech-name'>Docker Image:</span> 10.9kB<br>", 10
+             db "      <span class='tech-name'>Binary:</span> 10.7KB (10928 bytes, of which 2kB is the HTML page)", 10
              db "    </div>", 10
              db "    <div class='footer'>", 10
              db "      <p>No frameworks. No libraries. Just pure assembly and syscalls.</p>", 10
@@ -64,21 +64,11 @@ section .data
              db "</body>", 10
              db "</html>", 10
     response_len equ $ - response
-    
-    ; Сообщения для отладки
-    bind_msg db "Binding to port 8080...", 10
-    bind_msg_len equ $ - bind_msg
-    
-    listen_msg db "Listening for connections...", 10
-    listen_msg_len equ $ - listen_msg
-    
-    accept_msg db "Connection accepted!", 10
-    accept_msg_len equ $ - accept_msg
 
 section .bss
     sockfd resq 1
     clientfd resq 1
-    buffer resb 4096
+    buffer resb 1024
 
 section .text
     global _start
@@ -115,24 +105,10 @@ _start:
     mov rdx, 16           ; размер sockaddr_in
     syscall
     
-    ; Выводим сообщение о привязке
-    mov rax, 1            ; sys_write
-    mov rdi, 1            ; stdout
-    mov rsi, bind_msg
-    mov rdx, bind_msg_len
-    syscall
-    
     ; Начинаем слушать
     mov rax, 50           ; sys_listen
     mov rdi, [sockfd]
     mov rsi, 5            ; backlog
-    syscall
-    
-    ; Выводим сообщение о прослушивании
-    mov rax, 1            ; sys_write
-    mov rdi, 1            ; stdout
-    mov rsi, listen_msg
-    mov rdx, listen_msg_len
     syscall
 
 accept_loop:
@@ -144,18 +120,11 @@ accept_loop:
     syscall
     mov [clientfd], rax
     
-    ; Выводим сообщение о принятии соединения
-    mov rax, 1            ; sys_write
-    mov rdi, 1            ; stdout
-    mov rsi, accept_msg
-    mov rdx, accept_msg_len
-    syscall
-    
     ; Читаем запрос (просто чтобы очистить буфер)
     mov rax, 0            ; sys_read
     mov rdi, [clientfd]
     mov rsi, buffer
-    mov rdx, 4096
+    mov rdx, 1024
     syscall
     
     ; Отправляем ответ

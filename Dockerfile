@@ -18,9 +18,9 @@ FROM base AS builder
 WORKDIR /build
 COPY server.asm .
 
-# Компилируем ассемблер со статической линковкой для scratch
+# Компилируем ассемблер со статической линковкой для scratch и strip для уменьшения размера
 RUN nasm -f elf64 server.asm -o server.o && \
-    ld -m elf_x86_64 -static -o server server.o
+    ld -m elf_x86_64 -static -s -o server server.o
 
 RUN ls -lha /build
 
