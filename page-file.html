@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang='en'>
+
+<head>
+  <meta charset='UTF-8'>
+  <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+  <title>Assembly Web Server (File-based)</title>
+  <style>
+    body {
+      font-family: 'Courier New', monospace;
+      background: #1e1e1e;
+      color: #d4d4d4;
+      padding: 40px;
+      line-height: 1.6;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    h1 {
+      color: #4ec9b0;
+      border-bottom: 2px solid #4ec9b0;
+      padding-bottom: 10px;
+    }
+
+    h2 {
+      color: #569cd6;
+      margin-top: 30px;
+    }
+
+    .tech {
+      background: #252526;
+      padding: 15px;
+      margin: 10px 0;
+      border-left: 4px solid #4ec9b0;
+      border-radius: 4px;
+    }
+
+    .tech-name {
+      color: #ce9178;
+      font-weight: bold;
+    }
+
+    .footer {
+      margin-top: 40px;
+      text-align: center;
+      color: #858585;
+      font-size: 0.9em;
+    }
+
+    a {
+      color: #569cd6;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+      color: #4ec9b0;
+    }
+
+    strong {
+      color: #4ec9b0;
+    }
+
+    .highlight {
+      color: #4ec9b0;
+      font-weight: bold;
+    }
+  </style>
+</head>
+
+<body>
+  <div class='container'>
+    <h1>Assembly Web Server (File-based)</h1>
+    <p>This application is written in <strong>x86-64 Assembly</strong> language.</p>
+    <p class='highlight'>HTML page is read from disk at runtime - no recompilation needed to update content!</p>
+    <h2>Technologies Used:</h2>
+    <div class='tech'>
+      <span class='tech-name'>x86-64 Assembly</span> - Low-level system programming
+    </div>
+    <div class='tech'>
+      <span class='tech-name'>NASM</span> (Netwide Assembler) - Assembler for x86 architecture
+    </div>
+    <div class='tech'>
+      <span class='tech-name'>Linux System Calls</span> - Direct kernel interface (socket, bind, listen, accept, open, read, close)
+    </div>
+    <div class='tech'>
+      <span class='tech-name'>Docker</span> - Containerization platform
+    </div>
+    <div class='tech'>
+      <span class='tech-name'>Docker Scratch</span> - Empty base image (no OS)
+    </div>
+    <div class='tech'>
+      <span class='tech-name'>Kubernetes</span> - Container orchestration (deployment ready)
+    </div>
+    <h2>Size Information:</h2>
+    <div class='tech'>
+      <span class='tech-name'>Docker Image:</span> 11.8kB<br>
+      <span class='tech-name'>Binary:</span> 8.5KB (8704 bytes)<br>
+      <span class='tech-name'>HTML File:</span> 3KB (3083 bytes, separate from binary)
+    </div>
+    <div class='tech'>
+      <span class='tech-name'>Note:</span> Binary is smaller because HTML is not embedded. HTML file can be updated without recompiling!
+    </div>
+    <div class='footer'>
+      <p>No frameworks. No libraries. Just pure assembly and syscalls.</p>
+      <p><a href='https://github.com/Serabass/ASM-Server' target='_blank'>View on GitHub</a></p>
+    </div>
+  </div>
+</body>
+
+</html>
+
