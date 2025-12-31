@@ -1,3 +1,5 @@
+ARG FINAL_IMAGE=scratch
+
 # Мультистейдж сборка для минимального образа
 FROM alpine:latest AS base
 
@@ -16,24 +18,21 @@ FROM base AS builder
 WORKDIR /build
 COPY server.asm .
 
-# Компилируем ассемблер
+# Компилируем ассемблер со статической линковкой для scratch
 RUN nasm -f elf64 server.asm -o server.o && \
-    ld -m elf_x86_64 -o server server.o
+    ld -m elf_x86_64 -static -o server server.o
 
 #####################################################################
 
-# Финальный образ
-FROM alpine:latest
+# Финальный образ - пустой scratch
+FROM ${FINAL_IMAGE}
 
-# На Alpine уже есть musl libc, ничего дополнительного не нужно
-WORKDIR /app
-
-# Копируем собранный бинарник
-COPY --from=builder /build/server .
+# Копируем собранный статический бинарник
+COPY --from=builder /build/server /server
 
 # Открываем порт
 EXPOSE 8080
 
 # Запускаем сервер
-CMD ["./server"]
+CMD ["/server"]
 
