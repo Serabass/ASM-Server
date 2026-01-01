@@ -4,15 +4,15 @@
 $REGISTRY = "reg.serabass.kz"
 $VARIANTS = @("embedded", "external", "file")
 $BASE_IMAGES = @{
-    "scratch" = "scratch"
-    "alpine" = "alpine:latest"
-    "ubuntu" = "ubuntu:latest"
-    "debian" = "debian:latest"
-    "busybox" = "busybox:latest"
-    "slim" = "debian:bullseye-slim"
-    "distroless" = "gcr.io/distroless/static:latest"
-    "wolfi" = "cgr.dev/chainguard/wolfi-base:latest"
-    "rockylinux" = "rockylinux/rockylinux:latest"
+  "scratch"    = "scratch"
+  "alpine"     = "alpine:latest"
+  "ubuntu"     = "ubuntu:latest"
+  "debian"     = "debian:latest"
+  "busybox"    = "busybox:latest"
+  "slim"       = "debian:bullseye-slim"
+  "distroless" = "gcr.io/distroless/static:latest"
+  "wolfi"      = "cgr.dev/chainguard/wolfi-base:latest"
+  "rockylinux" = "rockylinux/rockylinux:latest"
 }
 
 $hclContent = @"
@@ -46,11 +46,11 @@ group "default" {
 
 # Генерируем таргеты через циклы
 foreach ($variant in $VARIANTS) {
-    foreach ($baseName in $BASE_IMAGES.Keys) {
-        $baseImage = $BASE_IMAGES[$baseName]
-        $targetName = "$variant-$baseName"
+  foreach ($baseName in $BASE_IMAGES.Keys) {
+    $baseImage = $BASE_IMAGES[$baseName]
+    $targetName = "$variant-$baseName"
         
-        $hclContent += @"
+    $hclContent += @"
 
 target "$targetName" {
   context = "./$variant"
@@ -65,7 +65,7 @@ target "$targetName" {
   cache-to = ["type=inline"]
 }
 "@
-    }
+  }
 }
 
 # Сохраняем в файл (используем UTF8 без BOM)
