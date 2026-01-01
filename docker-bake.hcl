@@ -4,12 +4,17 @@ variable "REGISTRY" {
 
 group "default" {
   targets = [
-    "embedded-alpine",
     "embedded-scratch",
-    "external-alpine",
+    "embedded-alpine",
+    "embedded-ubuntu",
+
     "external-scratch",
-    "file-alpine",
+    "external-alpine",
+    "external-ubuntu",
+
     "file-scratch",
+    "file-alpine",
+    "file-ubuntu",
   ]
 }
 

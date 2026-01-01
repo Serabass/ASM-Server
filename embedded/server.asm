@@ -117,6 +117,9 @@ section .data
              db "", 10
              db "</html>", 10
     html_body_len equ $ - html_body
+    
+    error_msg db "HTTP/1.1 500 Internal Server Error", 13, 10, 13, 10
+    error_len equ $ - error_msg
 
 section .bss
     sockfd resq 1
@@ -220,12 +223,20 @@ accept_loop:
     syscall
     mov [clientfd], rax
     
+    ; Проверяем ошибку accept
+    cmp rax, 0
+    jl accept_loop        ; если ошибка, пропускаем это соединение
+    
     ; Читаем запрос (просто чтобы очистить буфер)
     mov rax, 0            ; sys_read
     mov rdi, [clientfd]
     mov rsi, buffer
     mov rdx, 1024
     syscall
+    
+    ; Проверяем ошибку read (rax < 0)
+    cmp rax, 0
+    jl .error_close
     
     ; format Content-Length
     mov rdi, html_body_len
@@ -262,7 +273,27 @@ accept_loop:
     mov rdx, html_body_len
     syscall
     
+    ; Проверяем ошибку write (rax < 0)
+    cmp rax, 0
+    jl .error_close
+    
     ; Закрываем соединение с клиентом
+    mov rax, 3            ; sys_close
+    mov rdi, [clientfd]
+    syscall
+    
+    ; Возвращаемся к ожиданию следующего соединения
+    jmp accept_loop
+
+.error_close:
+    ; Отправляем ошибку клиенту
+    mov rax, 1
+    mov rdi, [clientfd]
+    mov rsi, error_msg
+    mov rdx, error_len
+    syscall
+    
+    ; Закрываем соединение
     mov rax, 3            ; sys_close
     mov rdi, [clientfd]
     syscall
