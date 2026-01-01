@@ -14,6 +14,26 @@ group "default" {
 }
 
 # Embedded вариант (HTML встроен в код)
+target "embedded-ubuntu" {
+  context = "./embedded"
+  dockerfile = "Dockerfile"
+  tags = [
+    "${REGISTRY}/asm-server:embedded-ubuntu"
+  ]
+  args = {
+    FINAL_IMAGE = "ubuntu:latest"
+  }
+  platforms = ["linux/amd64"]
+  output = ["type=image,push=true"]
+  cache-from = [
+    "type=registry,ref=${REGISTRY}/asmserver:embedded-ubuntu"
+  ]
+  cache-to = [
+    "type=inline"
+  ]
+}
+
+# Embedded вариант (HTML встроен в код)
 target "embedded-alpine" {
   context = "./embedded"
   dockerfile = "Dockerfile"
@@ -46,6 +66,28 @@ target "embedded-scratch" {
   output = ["type=image,push=true"]
   cache-from = [
     "type=registry,ref=${REGISTRY}/asmserver:embedded-scratch"
+  ]
+  cache-to = [
+    "type=inline"
+  ]
+}
+
+############################################################################################################################
+
+# External вариант (HTML через incbin)
+target "external-ubuntu" {
+  context = "./external"
+  dockerfile = "Dockerfile"
+  tags = [
+    "${REGISTRY}/asm-server:external-ubuntu"
+  ]
+  args = {
+    FINAL_IMAGE = "ubuntu:latest"
+  }
+  platforms = ["linux/amd64"]
+  output = ["type=image,push=true"]
+  cache-from = [
+    "type=registry,ref=${REGISTRY}/asmserver:external-ubuntu"
   ]
   cache-to = [
     "type=inline"
@@ -85,6 +127,28 @@ target "external-scratch" {
   output = ["type=image,push=true"]
   cache-from = [
     "type=registry,ref=${REGISTRY}/asmserver:external-scratch"
+  ]
+  cache-to = [
+    "type=inline"
+  ]
+}
+
+############################################################################################################################
+
+# File вариант (HTML читается с диска)
+target "file-ubuntu" {
+  context = "./file"
+  dockerfile = "Dockerfile"
+  tags = [
+    "${REGISTRY}/asm-server:file-ubuntu"
+  ]
+  args = {
+    FINAL_IMAGE = "ubuntu:latest"
+  }
+  platforms = ["linux/amd64"]
+  output = ["type=image,push=true"]
+  cache-from = [
+    "type=registry,ref=${REGISTRY}/asmserver:file-ubuntu"
   ]
   cache-to = [
     "type=inline"
