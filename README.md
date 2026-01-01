@@ -12,17 +12,29 @@ https://asm.serabass.kz
 
 ## Размеры образов и бинарников
 
-| Вариант | Base Image | Docker Image | Binary Size | Описание |
-|---------|------------|--------------|-------------|----------|
-| **embedded** | `scratch` | 11.2 kB | 10.9 KB | HTML встроен в код, минимальный размер |
-| **embedded** | `alpine` | 8.45 MB | 10.9 KB | HTML встроен в код, с базой Alpine |
-| **embedded** | `ubuntu` | 78.1 MB | 10.9 KB | HTML встроен в код, с базой Ubuntu |
-| **external** | `scratch` | 11.4 kB | 11.1 KB | HTML через `incbin`, минимальный размер |
-| **external** | `alpine` | 8.45 MB | 11.1 KB | HTML через `incbin`, с базой Alpine |
-| **external** | `ubuntu` | 78.1 MB | 11.1 KB | HTML через `incbin`, с базой Ubuntu |
-| **file** | `scratch` | 11.6 kB | 8.5 KB | HTML читается с диска, минимальный размер |
-| **file** | `alpine` | 8.45 MB | 8.5 KB | HTML читается с диска, с базой Alpine |
-| **file** | `ubuntu` | 78.1 MB | 8.5 KB | HTML читается с диска, с базой Ubuntu |
+### Embedded (HTML встроен в код)
+
+| Base Image | Docker Image | Binary Size | Описание |
+|------------|--------------|-------------|----------|
+| `scratch` | 11.2 kB | 10.9 KB | Минимальный размер |
+| `alpine` | 8.45 MB | 10.9 KB | С базой Alpine |
+| `ubuntu` | 78.1 MB | 10.9 KB | С базой Ubuntu |
+
+### External (HTML через `incbin`)
+
+| Base Image | Docker Image | Binary Size | Описание |
+|------------|--------------|-------------|----------|
+| `scratch` | 11.4 kB | 11.1 KB | Минимальный размер |
+| `alpine` | 8.45 MB | 11.1 KB | С базой Alpine |
+| `ubuntu` | 78.1 MB | 11.1 KB | С базой Ubuntu |
+
+### File (HTML читается с диска)
+
+| Base Image | Docker Image | Binary Size | Описание |
+|------------|--------------|-------------|----------|
+| `scratch` | 11.6 kB | 8.5 KB | Минимальный размер |
+| `alpine` | 8.45 MB | 8.5 KB | С базой Alpine |
+| `ubuntu` | 78.1 MB | 8.5 KB | С базой Ubuntu |
 
 ### Детали по вариантам
 
