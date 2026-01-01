@@ -15,17 +15,18 @@ https://asm.serabass.kz
 ## Размеры образов
 
 ### Вариант с встроенной страницей (`embedded/`)
-- **Docker Image:** 10.9kB
-- **Binary:** 10.7KB (10928 bytes, из которых 2кб это HTML страница)
+- **Docker Image:** 11.2kB
+- **Binary:** 10.9KB (11152 bytes, из которых ~2.7KB это HTML страница)
 
 ### Вариант с внешней страницей через incbin (`external/`)
-- **Docker Image:** 11.3kB
-- **Binary:** 11KB (11256 bytes, из которых 2.5кб это HTML страница)
+- **Docker Image:** 11.4kB
+- **Binary:** 11.1KB (11360 bytes, из которых 2.7KB это HTML страница)
+- **HTML File:** 2.7KB (2714 bytes, включается в бинарник через incbin)
 
 ### Вариант с чтением из файла (`file/`)
-- **Docker Image:** 11.8kB
+- **Docker Image:** 11.6kB
 - **Binary:** 8.5KB (8704 bytes, HTML читается с диска отдельно)
-- **HTML File:** 3KB (3081 bytes, отдельный файл)
+- **HTML File:** 2.9KB (2871 bytes, отдельный файл)
 
 ## Сборка
 

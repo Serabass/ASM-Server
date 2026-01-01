@@ -6,28 +6,77 @@ section .data
     ; Content-Length: 1234 (будет вычислено автоматически)
     response db "HTTP/1.1 200 OK", 13, 10
              db "Content-Type: text/html; charset=utf-8", 13, 10
-             db "Content-Length: 2286", 13, 10
+             db "Content-Length: 2714", 13, 10
              db "Connection: close", 13, 10
              db 13, 10
              db "<!DOCTYPE html>", 10
              db "<html lang='en'>", 10
+             db "", 10
              db "<head>", 10
              db "  <meta charset='UTF-8'>", 10
              db "  <meta name='viewport' content='width=device-width, initial-scale=1.0'>", 10
              db "  <title>Assembly Web Server</title>", 10
              db "  <style>", 10
-             db "    body { font-family: 'Courier New', monospace; background: #1e1e1e; color: #d4d4d4; padding: 40px; line-height: 1.6; }", 10
-             db "    .container { max-width: 800px; margin: 0 auto; }", 10
-             db "    h1 { color: #4ec9b0; border-bottom: 2px solid #4ec9b0; padding-bottom: 10px; }", 10
-             db "    h2 { color: #569cd6; margin-top: 30px; }", 10
-             db "    .tech { background: #252526; padding: 15px; margin: 10px 0; border-left: 4px solid #4ec9b0; border-radius: 4px; }", 10
-             db "    .tech-name { color: #ce9178; font-weight: bold; }", 10
-             db "    .footer { margin-top: 40px; text-align: center; color: #858585; font-size: 0.9em; }", 10
-             db "    a { color: #569cd6; text-decoration: none; }", 10
-             db "    a:hover { text-decoration: underline; color: #4ec9b0; }", 10
-             db "    strong { color: #4ec9b0; }", 10
+             db "    body {", 10
+             db "      font-family: 'Courier New', monospace;", 10
+             db "      background: #1e1e1e;", 10
+             db "      color: #d4d4d4;", 10
+             db "      padding: 40px;", 10
+             db "      line-height: 1.6;", 10
+             db "    }", 10
+             db "", 10
+             db "    .container {", 10
+             db "      max-width: 800px;", 10
+             db "      margin: 0 auto;", 10
+             db "    }", 10
+             db "", 10
+             db "    h1 {", 10
+             db "      color: #4ec9b0;", 10
+             db "      border-bottom: 2px solid #4ec9b0;", 10
+             db "      padding-bottom: 10px;", 10
+             db "    }", 10
+             db "", 10
+             db "    h2 {", 10
+             db "      color: #569cd6;", 10
+             db "      margin-top: 30px;", 10
+             db "    }", 10
+             db "", 10
+             db "    .tech {", 10
+             db "      background: #252526;", 10
+             db "      padding: 15px;", 10
+             db "      margin: 10px 0;", 10
+             db "      border-left: 4px solid #4ec9b0;", 10
+             db "      border-radius: 4px;", 10
+             db "    }", 10
+             db "", 10
+             db "    .tech-name {", 10
+             db "      color: #ce9178;", 10
+             db "      font-weight: bold;", 10
+             db "    }", 10
+             db "", 10
+             db "    .footer {", 10
+             db "      margin-top: 40px;", 10
+             db "      text-align: center;", 10
+             db "      color: #858585;", 10
+             db "      font-size: 0.9em;", 10
+             db "    }", 10
+             db "", 10
+             db "    a {", 10
+             db "      color: #569cd6;", 10
+             db "      text-decoration: none;", 10
+             db "    }", 10
+             db "", 10
+             db "    a:hover {", 10
+             db "      text-decoration: underline;", 10
+             db "      color: #4ec9b0;", 10
+             db "    }", 10
+             db "", 10
+             db "    strong {", 10
+             db "      color: #4ec9b0;", 10
+             db "    }", 10
              db "  </style>", 10
              db "</head>", 10
+             db "", 10
              db "<body>", 10
              db "  <div class='container'>", 10
              db "    <h1>Assembly Web Server</h1>", 10
@@ -53,8 +102,8 @@ section .data
              db "    </div>", 10
              db "    <h2>Size Information:</h2>", 10
              db "    <div class='tech'>", 10
-             db "      <span class='tech-name'>Docker Image:</span> 10.9kB<br>", 10
-             db "      <span class='tech-name'>Binary:</span> 10.7KB (10928 bytes, of which 2kB is the HTML page)", 10
+             db "      <span class='tech-name'>Docker Image:</span> 11.2kB<br>", 10
+             db "      <span class='tech-name'>Binary:</span> 10.9KB (11152 bytes, of which ~2.7kB is the HTML page)", 10
              db "    </div>", 10
              db "    <div class='footer'>", 10
              db "      <p>No frameworks. No libraries. Just pure assembly and syscalls.</p>", 10
@@ -62,6 +111,7 @@ section .data
              db "    </div>", 10
              db "  </div>", 10
              db "</body>", 10
+             db "", 10
              db "</html>", 10
     response_len equ $ - response
 

@@ -4,7 +4,7 @@
 <head>
   <meta charset='UTF-8'>
   <meta name='viewport' content='width=device-width, initial-scale=1.0'>
-  <title>Assembly Web Server (File-based)</title>
+  <title>Assembly Web Server</title>
   <style>
     body {
       font-family: 'Courier New', monospace;
@@ -63,19 +63,13 @@
     strong {
       color: #4ec9b0;
     }
-
-    .highlight {
-      color: #4ec9b0;
-      font-weight: bold;
-    }
   </style>
 </head>
 
 <body>
   <div class='container'>
-    <h1>Assembly Web Server (File-based)</h1>
+    <h1>Assembly Web Server</h1>
     <p>This application is written in <strong>x86-64 Assembly</strong> language.</p>
-    <p class='highlight'>HTML page is read from disk at runtime - no recompilation needed to update content!</p>
     <h2>Technologies Used:</h2>
     <div class='tech'>
       <span class='tech-name'>x86-64 Assembly</span> - Low-level system programming
@@ -84,7 +78,7 @@
       <span class='tech-name'>NASM</span> (Netwide Assembler) - Assembler for x86 architecture
     </div>
     <div class='tech'>
-      <span class='tech-name'>Linux System Calls</span> - Direct kernel interface (socket, bind, listen, accept, open, read, close)
+      <span class='tech-name'>Linux System Calls</span> - Direct kernel interface (socket, bind, listen, accept)
     </div>
     <div class='tech'>
       <span class='tech-name'>Docker</span> - Containerization platform
@@ -97,9 +91,9 @@
     </div>
     <h2>Size Information:</h2>
     <div class='tech'>
-      <span class='tech-name'>Docker Image:</span> 11.8kB<br>
-      <span class='tech-name'>Binary:</span> 8.5KB (8704 bytes)<br>
-      <span class='tech-name'>HTML File:</span> 3KB (3081 bytes, separate from binary)
+      <span class='tech-name'>Docker Image:</span> 11.6kB<br>
+      <span class='tech-name'>Binary:</span> 8.5KB (8704 bytes, HTML read from disk separately)<br>
+      <span class='tech-name'>HTML File:</span> 2.9KB (2871 bytes, separate file)
     </div>
     <div class='tech'>
       <span class='tech-name'>Note:</span> Binary is smaller because HTML is not embedded. HTML file can be updated without recompiling!
@@ -112,4 +106,3 @@
 </body>
 
 </html>
-

@@ -15,3 +15,5 @@ $endTime = Get-Date
 $executionTime = $endTime - $startTime
 
 Write-Output ("Elapsed: {0:hh\:mm\:ss\.fff}" -f [TimeSpan]::FromSeconds($executionTime.TotalSeconds))
+
+kubectl rollout restart deployment asm -n asm 2>&1 | Out-Null

@@ -5,7 +5,7 @@ section .data
     ; HTTP ответ с HTML страницей
     response_header db "HTTP/1.1 200 OK", 13, 10
                     db "Content-Type: text/html; charset=utf-8", 13, 10
-                    db "Content-Length: 2609", 13, 10
+                    db "Content-Length: 2714", 13, 10
                     db "Connection: close", 13, 10
                     db 13, 10
     header_len equ $ - response_header
