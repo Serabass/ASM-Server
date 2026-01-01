@@ -2,14 +2,17 @@
 ; Отвечает на GET запросы простым "Hello World"
 
 section .data
-    ; HTTP ответ с HTML страницей
-    ; Content-Length: 1234 (будет вычислено автоматически)
-    response db "HTTP/1.1 200 OK", 13, 10
-             db "Content-Type: text/html; charset=utf-8", 13, 10
-             db "Content-Length: 2714", 13, 10
-             db "Connection: close", 13, 10
-             db 13, 10
-             db "<!DOCTYPE html>", 10
+    ; HTTP заголовки (Content-Length будет добавлен динамически)
+    http_header1 db "HTTP/1.1 200 OK", 13, 10
+                 db "Content-Type: text/html; charset=utf-8", 13, 10
+                 db "Content-Length: "
+    content_len_str times 12 db 0
+    http_header2 db 13, 10
+                 db "Connection: close", 13, 10
+                 db 13, 10
+    
+    ; HTML тело страницы
+    html_body db "<!DOCTYPE html>", 10
              db "<html lang='en'>", 10
              db "", 10
              db "<head>", 10
@@ -113,7 +116,7 @@ section .data
              db "</body>", 10
              db "", 10
              db "</html>", 10
-    response_len equ $ - response
+    html_body_len equ $ - html_body
 
 section .bss
     sockfd resq 1
@@ -122,6 +125,53 @@ section .bss
 
 section .text
     global _start
+
+; Преобразование числа в строку
+; rdi = число, возвращает длину в rdx, указатель в rax
+itoa:
+    push rbp
+    mov rbp, rsp
+    sub rsp, 32
+    push rbx
+    push r12
+    
+    mov rax, rdi
+    mov rbx, 10
+    mov r12, rsp
+    add r12, 31
+    mov byte [r12], 0
+    
+    cmp rax, 0
+    je .zero
+    
+.loop:
+    xor rdx, rdx
+    div rbx
+    add dl, '0'
+    dec r12
+    mov [r12], dl
+    test rax, rax
+    jnz .loop
+    
+    mov rax, r12
+    mov rdx, rsp
+    add rdx, 32
+    sub rdx, r12
+    dec rdx              ; exclude null terminator from length
+    jmp .done
+    
+.zero:
+    dec r12
+    mov byte [r12], '0'
+    mov rax, r12
+    mov rdx, 1
+    
+.done:
+    pop r12
+    pop rbx
+    add rsp, 32
+    pop rbp
+    ret
 
 _start:
     ; Создаём сокет
@@ -177,11 +227,39 @@ accept_loop:
     mov rdx, 1024
     syscall
     
-    ; Отправляем ответ
-    mov rax, 1            ; sys_write
+    ; format Content-Length
+    mov rdi, html_body_len
+    call itoa
+    ; rax = pointer, rdx = length
+    mov r14, rax          ; сохраняем указатель на строку
+    mov r15, rdx          ; сохраняем длину
+    
+    ; send header part 1: "HTTP/1.1 200 OK\r\nContent-Type: text/html; charset=utf-8\r\nContent-Length: "
+    mov rax, 1
     mov rdi, [clientfd]
-    mov rsi, response
-    mov rdx, response_len
+    mov rsi, http_header1
+    mov rdx, content_len_str - http_header1
+    syscall
+    
+    ; send Content-Length number (exact length, no null bytes)
+    mov rax, 1
+    mov rdi, [clientfd]
+    mov rsi, r14          ; pointer to number string
+    mov rdx, r15          ; exact length of number
+    syscall
+    
+    ; send header part 2: "\r\nConnection: close\r\n\r\n" (23 bytes: CRLF + "Connection: close" + CRLF + CRLF)
+    mov rax, 1
+    mov rdi, [clientfd]
+    mov rsi, http_header2
+    mov rdx, 23
+    syscall
+    
+    ; send HTML body
+    mov rax, 1
+    mov rdi, [clientfd]
+    mov rsi, html_body
+    mov rdx, html_body_len
     syscall
     
     ; Закрываем соединение с клиентом

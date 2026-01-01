@@ -8,7 +8,7 @@ section .data
     http_header1 db "HTTP/1.1 200 OK", 13, 10
                  db "Content-Type: text/html; charset=utf-8", 13, 10
                  db "Content-Length: "
-    content_len_str resb 12
+    content_len_str times 12 db 0
     http_header2 db 13, 10
                  db "Connection: close", 13, 10
                  db 13, 10
@@ -20,6 +20,7 @@ section .bss
     buffer resb 1024
     html_buffer resb 8192
     html_size resq 1
+    header_buffer resb 256
 
 section .text
     global _start
@@ -55,6 +56,7 @@ itoa:
     mov rdx, rsp
     add rdx, 32
     sub rdx, r12
+    dec rdx              ; exclude null terminator from length
     jmp .done
     
 .zero:
@@ -135,13 +137,17 @@ accept_loop:
     cmp rax, 0
     jl .error
     
-    ; read HTML file
-    mov rax, 0
+    ; read HTML file (single read should be enough for files < 8KB)
+    mov rax, 0                 ; sys_read
     mov rdi, [htmlfd]
     mov rsi, html_buffer
     mov rdx, 8192
     syscall
     mov [html_size], rax
+    
+    ; check if read was successful (rax should be > 0)
+    cmp rax, 0
+    jle .error_close_file
     
     ; close HTML file
     mov rax, 3
@@ -152,29 +158,24 @@ accept_loop:
     mov rdi, [html_size]
     call itoa
     ; rax = pointer, rdx = length
+    mov r14, rax          ; сохраняем указатель на строку
     mov r15, rdx          ; сохраняем длину
     
-    ; copy to content_len_str
-    mov rdi, content_len_str
-    mov rsi, rax
-    mov rcx, r15
-    rep movsb
-    
-    ; send header part 1
+    ; send header part 1: "HTTP/1.1 200 OK\r\nContent-Type: text/html; charset=utf-8\r\nContent-Length: "
     mov rax, 1
     mov rdi, [clientfd]
     mov rsi, http_header1
     mov rdx, content_len_str - http_header1
     syscall
     
-    ; send Content-Length
+    ; send Content-Length number (exact length, no null bytes)
     mov rax, 1
     mov rdi, [clientfd]
-    mov rsi, content_len_str
-    mov rdx, r15          ; длина из сохранённого значения
+    mov rsi, r14          ; pointer to number string
+    mov rdx, r15          ; exact length of number
     syscall
     
-    ; send header part 2 (CRLF + "Connection: close" + CRLF + CRLF = 22 байта)
+    ; send header part 2: "\r\nConnection: close\r\n\r\n"
     mov rax, 1
     mov rdi, [clientfd]
     mov rsi, http_header2
@@ -189,6 +190,12 @@ accept_loop:
     syscall
     
     jmp .close
+    
+.error_close_file:
+    ; close HTML file if it was opened
+    mov rax, 3
+    mov rdi, [htmlfd]
+    syscall
     
 .error:
     mov rax, 1

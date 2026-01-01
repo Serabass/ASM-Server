@@ -1,16 +1,33 @@
 services:
-  asm-web-server:
+  embedded:
     build:
-      context: .
+      context: ./embedded
       dockerfile: Dockerfile
-    container_name: asm-web-server
+      args:
+        FINAL_IMAGE: "scratch"
+    container_name: asm-embedded
     ports:
       - "8080:8080"
     restart: unless-stopped
-    # Healthcheck отключен, т.к. в минимальном Alpine нет wget/nc
-    # Можно добавить busybox-extras если нужен healthcheck
-    # healthcheck:
-    #   test: ["CMD-SHELL", "wget --quiet --tries=1 --spider http://localhost:8080/ || exit 1"]
-    #   interval: 10s
-    #   timeout: 5s
-    #   retries: 3
+
+  external:
+    build:
+      context: ./external
+      dockerfile: Dockerfile
+      args:
+        FINAL_IMAGE: "scratch"
+    container_name: asm-external
+    ports:
+      - "8081:8080"
+    restart: unless-stopped
+
+  file:
+    build:
+      context: ./file
+      dockerfile: Dockerfile
+      args:
+        FINAL_IMAGE: "scratch"
+    container_name: asm-file
+    ports:
+      - "8082:8080"
+    restart: unless-stopped
