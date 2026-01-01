@@ -19,33 +19,42 @@ https://asm.serabass.kz
 | Base Image | OS | Docker Image (несжатый) | Registry (сжатый) | Binary Size | Описание |
 |------------|----|------------------------|-------------------|-------------|----------|
 | `scratch` | No OS | 11.2 kB | 1.78 KB | 10.9 KB | Минимальный размер |
+| `distroless` | No OS | 2.09 MB | 0.78 MB | 10.9 KB | Google distroless (static) |
 | `busybox` | BusyBox | 4.44 MB | 1.74 MB | 10.9 KB | Минимальная база с утилитами |
 | `alpine` | Alpine Linux | 8.45 MB | 3.68 MB | 10.9 KB | С базой Alpine |
+| `wolfi` | Wolfi | 15.9 MB | 6.93 MB | 10.9 KB | Chainguard Wolfi (security-focused) |
 | `slim` | Debian | 80.7 MB | 30.18 MB | 10.9 KB | Debian slim версия |
 | `ubuntu` | Ubuntu | 78.1 MB | 29.18 MB | 10.9 KB | С базой Ubuntu |
 | `debian` | Debian | 120 MB | 49.32 MB | 10.9 KB | Полная версия Debian |
+| `rockylinux` | Rocky Linux | 196 MB | 73.3 MB | 10.9 KB | RHEL альтернатива |
 
 ### External (HTML через `incbin`)
 
 | Base Image | OS | Docker Image (несжатый) | Registry (сжатый) | Binary Size | Описание |
 |------------|----|------------------------|-------------------|-------------|----------|
 | `scratch` | No OS | 11.4 kB | 1.81 KB | 11.1 KB | Минимальный размер |
+| `distroless` | No OS | 2.09 MB | 0.78 MB | 11.1 KB | Google distroless (static) |
 | `busybox` | BusyBox | 4.44 MB | 1.74 MB | 11.1 KB | Минимальная база с утилитами |
 | `alpine` | Alpine Linux | 8.45 MB | 3.68 MB | 11.1 KB | С базой Alpine |
+| `wolfi` | Wolfi | 15.9 MB | 6.93 MB | 11.1 KB | Chainguard Wolfi (security-focused) |
 | `slim` | Debian | 80.7 MB | 30.18 MB | 11.1 KB | Debian slim версия |
 | `ubuntu` | Ubuntu | 78.1 MB | 29.18 MB | 11.1 KB | С базой Ubuntu |
 | `debian` | Debian | 120 MB | 49.32 MB | 11.1 KB | Полная версия Debian |
+| `rockylinux` | Rocky Linux | 196 MB | 73.3 MB | 11.1 KB | RHEL альтернатива |
 
 ### File (HTML читается с диска)
 
 | Base Image | OS | Docker Image (несжатый) | Registry (сжатый) | Binary Size | Описание |
 |------------|----|------------------------|-------------------|-------------|----------|
 | `scratch` | No OS | 11.6 kB | 1.84 KB | 8.5 KB | Минимальный размер |
+| `distroless` | No OS | 2.09 MB | 0.78 MB | 8.5 KB | Google distroless (static) |
 | `busybox` | BusyBox | 4.44 MB | 1.74 MB | 8.5 KB | Минимальная база с утилитами |
 | `alpine` | Alpine Linux | 8.45 MB | 3.68 MB | 8.5 KB | С базой Alpine |
+| `wolfi` | Wolfi | 15.9 MB | 6.93 MB | 8.5 KB | Chainguard Wolfi (security-focused) |
 | `slim` | Debian | 80.7 MB | 30.18 MB | 8.5 KB | Debian slim версия |
 | `ubuntu` | Ubuntu | 78.1 MB | 29.18 MB | 8.5 KB | С базой Ubuntu |
 | `debian` | Debian | 120 MB | 49.32 MB | 8.5 KB | Полная версия Debian |
+| `rockylinux` | Rocky Linux | 196 MB | 73.3 MB | 8.5 KB | RHEL альтернатива |
 
 ### Детали по вариантам
 

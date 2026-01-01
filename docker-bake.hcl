@@ -10,6 +10,9 @@ group "default" {
     "embedded-debian",
     "embedded-busybox",
     "embedded-slim",
+    "embedded-distroless",
+    "embedded-wolfi",
+    "embedded-rockylinux",
 
     "external-scratch",
     "external-alpine",
@@ -17,6 +20,9 @@ group "default" {
     "external-debian",
     "external-busybox",
     "external-slim",
+    "external-distroless",
+    "external-wolfi",
+    "external-rockylinux",
 
     "file-scratch",
     "file-alpine",
@@ -24,6 +30,9 @@ group "default" {
     "file-debian",
     "file-busybox",
     "file-slim",
+    "file-distroless",
+    "file-wolfi",
+    "file-rockylinux",
   ]
 }
 
@@ -156,6 +165,63 @@ target "embedded-slim" {
   output = ["type=image,push=true"]
   cache-from = [
     "type=registry,ref=${REGISTRY}/asmserver:embedded-slim"
+  ]
+  cache-to = [
+    "type=inline"
+  ]
+}
+
+target "embedded-distroless" {
+  context = "./embedded"
+  dockerfile = "Dockerfile"
+  tags = [
+    "${REGISTRY}/asm-server:embedded-distroless"
+  ]
+  args = {
+    FINAL_IMAGE = "gcr.io/distroless/static:latest"
+  }
+  platforms = ["linux/amd64"]
+  output = ["type=image,push=true"]
+  cache-from = [
+    "type=registry,ref=${REGISTRY}/asmserver:embedded-distroless"
+  ]
+  cache-to = [
+    "type=inline"
+  ]
+}
+
+target "embedded-wolfi" {
+  context = "./embedded"
+  dockerfile = "Dockerfile"
+  tags = [
+    "${REGISTRY}/asm-server:embedded-wolfi"
+  ]
+  args = {
+    FINAL_IMAGE = "cgr.dev/chainguard/wolfi-base:latest"
+  }
+  platforms = ["linux/amd64"]
+  output = ["type=image,push=true"]
+  cache-from = [
+    "type=registry,ref=${REGISTRY}/asmserver:embedded-wolfi"
+  ]
+  cache-to = [
+    "type=inline"
+  ]
+}
+
+target "embedded-rockylinux" {
+  context = "./embedded"
+  dockerfile = "Dockerfile"
+  tags = [
+    "${REGISTRY}/asm-server:embedded-rockylinux"
+  ]
+  args = {
+    FINAL_IMAGE = "rockylinux/rockylinux:latest"
+  }
+  platforms = ["linux/amd64"]
+  output = ["type=image,push=true"]
+  cache-from = [
+    "type=registry,ref=${REGISTRY}/asmserver:embedded-rockylinux"
   ]
   cache-to = [
     "type=inline"
@@ -299,6 +365,63 @@ target "external-slim" {
   ]
 }
 
+target "external-distroless" {
+  context = "./external"
+  dockerfile = "Dockerfile"
+  tags = [
+    "${REGISTRY}/asm-server:external-distroless"
+  ]
+  args = {
+    FINAL_IMAGE = "gcr.io/distroless/static:latest"
+  }
+  platforms = ["linux/amd64"]
+  output = ["type=image,push=true"]
+  cache-from = [
+    "type=registry,ref=${REGISTRY}/asmserver:external-distroless"
+  ]
+  cache-to = [
+    "type=inline"
+  ]
+}
+
+target "external-wolfi" {
+  context = "./external"
+  dockerfile = "Dockerfile"
+  tags = [
+    "${REGISTRY}/asm-server:external-wolfi"
+  ]
+  args = {
+    FINAL_IMAGE = "cgr.dev/chainguard/wolfi-base:latest"
+  }
+  platforms = ["linux/amd64"]
+  output = ["type=image,push=true"]
+  cache-from = [
+    "type=registry,ref=${REGISTRY}/asmserver:external-wolfi"
+  ]
+  cache-to = [
+    "type=inline"
+  ]
+}
+
+target "external-rockylinux" {
+  context = "./external"
+  dockerfile = "Dockerfile"
+  tags = [
+    "${REGISTRY}/asm-server:external-rockylinux"
+  ]
+  args = {
+    FINAL_IMAGE = "rockylinux/rockylinux:latest"
+  }
+  platforms = ["linux/amd64"]
+  output = ["type=image,push=true"]
+  cache-from = [
+    "type=registry,ref=${REGISTRY}/asmserver:external-rockylinux"
+  ]
+  cache-to = [
+    "type=inline"
+  ]
+}
+
 ############################################################################################################################
 
 # File вариант (HTML читается с диска)
@@ -430,6 +553,63 @@ target "file-slim" {
   output = ["type=image,push=true"]
   cache-from = [
     "type=registry,ref=${REGISTRY}/asmserver:file-slim"
+  ]
+  cache-to = [
+    "type=inline"
+  ]
+}
+
+target "file-distroless" {
+  context = "./file"
+  dockerfile = "Dockerfile"
+  tags = [
+    "${REGISTRY}/asm-server:file-distroless"
+  ]
+  args = {
+    FINAL_IMAGE = "gcr.io/distroless/static:latest"
+  }
+  platforms = ["linux/amd64"]
+  output = ["type=image,push=true"]
+  cache-from = [
+    "type=registry,ref=${REGISTRY}/asmserver:file-distroless"
+  ]
+  cache-to = [
+    "type=inline"
+  ]
+}
+
+target "file-wolfi" {
+  context = "./file"
+  dockerfile = "Dockerfile"
+  tags = [
+    "${REGISTRY}/asm-server:file-wolfi"
+  ]
+  args = {
+    FINAL_IMAGE = "cgr.dev/chainguard/wolfi-base:latest"
+  }
+  platforms = ["linux/amd64"]
+  output = ["type=image,push=true"]
+  cache-from = [
+    "type=registry,ref=${REGISTRY}/asmserver:file-wolfi"
+  ]
+  cache-to = [
+    "type=inline"
+  ]
+}
+
+target "file-rockylinux" {
+  context = "./file"
+  dockerfile = "Dockerfile"
+  tags = [
+    "${REGISTRY}/asm-server:file-rockylinux"
+  ]
+  args = {
+    FINAL_IMAGE = "rockylinux/rockylinux:latest"
+  }
+  platforms = ["linux/amd64"]
+  output = ["type=image,push=true"]
+  cache-from = [
+    "type=registry,ref=${REGISTRY}/asmserver:file-rockylinux"
   ]
   cache-to = [
     "type=inline"
