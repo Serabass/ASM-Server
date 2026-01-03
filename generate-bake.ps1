@@ -61,7 +61,6 @@ target "$targetName" {
   }
   platforms = ["linux/amd64"]
   output = ["type=image,push=true"]
-  cache-from = ["type=registry,ref=`${REGISTRY}/asmserver:$targetName"]
   cache-to = ["type=inline"]
 }
 "@
